@@ -5,20 +5,33 @@ import (
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
+	"database/sql"
 )
+
+import _ "github.com/go-sql-driver/mysql"
+
+
 
 type App struct {
 	Router *mux.Router
+	DB *sql.DB
 }
 
 func (a *App) Initialize() {
+	db, err := sql.Open("mysql", "root:codeS2@/codeS2")
+
+	if err != nil {
+		log.Fatal("Could not connect database")
+	}
+
+	a.DB = db
 	a.Router = mux.NewRouter()
 	a.setRouters()
 }
 
 func (a *App) setRouters() {
 	// Routing for handling the projects
-	a.Get("/code", a.getAllCode)
+	a.Get("/code", a.GetAllCode)
 
 	//a.Post("/projects/{title}/tasks", a.CreateTask)
 	//a.Get("/projects/{title}/tasks/{id:[0-9]+}", a.GetTask)
@@ -30,7 +43,7 @@ func (a *App) setRouters() {
 ** Projects Handlers
  */
 func (a *App) GetAllCode(w http.ResponseWriter, r *http.Request) {
-	handler.GetAllCode(w)
+	handler.GetAllCode(a.DB,w)
 }
 
 // Get wraps the router for GET method
