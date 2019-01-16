@@ -11,12 +11,12 @@ type Code struct {
 }
 
 func (u *Code) GetCode(db *sql.DB) error {
-	statement := fmt.Sprintf("SELECT title FROM Code WHERE id=%d", u.ID)
+	statement := fmt.Sprintf("SELECT title FROM code WHERE id=%d", u.ID)
 	return db.QueryRow(statement).Scan(&u.Title)
 }
 
 func FindAll(db *sql.DB) ([]Code, error) {
-	statement := fmt.Sprintf("SELECT id, title FROM Code")
+	statement := fmt.Sprintf("SELECT id, title FROM code")
 	rows, err := db.Query(statement)
 
 	if err != nil {

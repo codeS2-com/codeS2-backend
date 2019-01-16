@@ -9,8 +9,7 @@ import (
 
 func GetAllCode(DB *sql.DB, w http.ResponseWriter) {
 
-
-	codes, err := FindAll(DB)
+	codes, err := model.FindAll(DB)
 	if err != nil {
 		respondError(w, http.StatusInternalServerError, err.Error())
 		return
