@@ -1,8 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"github.com/codeS2-com/codeS2-backend/app"
+)
 
 func main() {
+	//config := config.GetConfig()
 
-	fmt.Println("Ola")
+	app := &app.App{}
+	app.Initialize()
+	app.Run(":3000")
 }
